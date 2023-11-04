@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Log In</title>
+</head>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+	tailwind.config = {
+		theme : {
+			extend : {
+				fontFamily : {
+					sans : [ 'Inter', 'sans-serif' ],
+				},
+			}
+		}
+	}
+</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript" th:src="@{/js/funciones.js}"></script>
+<body>
+	<!-- component -->
+	<!-- component -->
+
+	<div
+		class="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+		<div class="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
+
+			<h1 class="font-bold text-center text-2xl mb-5">
+				<p align="center">
+					<img th:src="@{/../imagenes/logo.jpg}" alt="" width="150"
+						height="60">
+				</p>
+			</h1>
+
+			<div
+				class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
+
+				<form th:action="@{/login}" method="post">
+					<div class="px-5 py-7">
+						<label class="font-semibold text-sm text-gray-600 pb-1 block">Usuario</label>
+						<input name="username" id="username" type="text"
+							class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
+						<label class="font-semibold text-sm text-gray-600 pb-1 block">Password</label>
+						<input name="password" id="password" type="password"
+							class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
+						<input type="submit" value="Sign in"
+							class="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block" />
+					</div>
+				</form>
+
+				<div class="py-5">
+					<div class="grid grid-cols-2 gap-1">
+						<div class="text-center sm:text-right whitespace-nowrap">
+							<button
+								class="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset"
+								onclick="window.location.href='/home'">
+								<svg xmlns="http://www.w3.org/2000/svg" fill="currentcolor"
+									viewBox="0 0 20 20" stroke="currentColor"
+									class="w-4 h-4 inline-block align-text-top">
+  				<path
+										d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+				</svg>
+								<span class="inline-block ml-1">Back to Home</span>
+							</button>
+						</div>
+					</div>
+					<label th:text="${error}" class="text-red-700 font-mono p-2"></label>
+					<label th:text="${success}" class="text-red-700 font-mono p-1"></label>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+</body>
+</html>

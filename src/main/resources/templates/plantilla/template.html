@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="UTF-8">
+</head>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<body>
+
+	<!--  BARRA DE NAVEGACION  -->
+	<header th:fragment="header">
+		<nav class="bg-slate-800 shadow shadow-slate-50 w-100 px-8 md:px-auto">
+			<div
+				class="md:h-16 h-28 mx-auto md:px-4 container flex items-center justify-between flex-wrap md:flex-nowrap">
+				<!-- Logo -->
+				<div class="text-indigo-500 md:order-1">
+					<!-- Heroicon - Chip Outline -->
+					<img th:src="@{/../imagenes/logo.jpg}" alt="" width="99"
+						height="40">
+				</div>
+				<div class="text-gray-500 order-3 w-full md:w-auto md:order-2">
+					<ul class="flex font-semibold justify-between">
+						<li class="md:px-4 md:py-2 text-slate-300"><a href="/home">Inicio</a></li>
+						<li class="md:px-4 md:py-2 hover:text-slate-400"><a
+							href="/nosotros">Nosotros</a></li>
+						<li class="md:px-4 md:py-2 hover:text-slate-400"><a href="/contacto">Contacto</a></li>
+						<li class="md:px-4 md:py-2 hover:text-slate-400" sec:authorize="isAuthenticated()" ><a href="/ordena">Ordena Aquí</a></li>
+						<li class="md:px-4 md:py-2 hover:text-slate-400" 
+							sec:authorize="hasRole('ROLE_USER')" ><a href="/mostrarCarrito"><img
+							th:src="@{/../imagenes/carrito.jpg}" alt="" width="30"
+							height="10"></a>
+						</li>
+						<li class="md:px-4 md:py-2 hover:text-slate-400" sec:authorize="hasRole('ROLE_USER')" ><a href="/misPedidos">  <svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							class="h-8 w-8">
+							<path
+							  d="M3.375 3C2.339 3 1.5 3.84 1.5 4.875v.75c0 1.036.84 1.875 1.875 1.875h17.25c1.035 0 1.875-.84 1.875-1.875v-.75C22.5 3.839 21.66 3 20.625 3H3.375z" />
+							<path
+							  fill-rule="evenodd"
+							  d="M3.087 9l.54 9.176A3 3 0 006.62 21h10.757a3 3 0 002.995-2.824L20.913 9H3.087zm6.163 3.75A.75.75 0 0110 12h4a.75.75 0 010 1.5h-4a.75.75 0 01-.75-.75z"
+							  clip-rule="evenodd" />
+						  </svg></a></li>
+					</ul>
+				</div>
+				<div class="order-2 md:order-3">
+					<button
+						class="px-4 py-2 bg-slate-600 hover:bg-slate-700 text-gray-50 rounded-xl flex items-center gap-2"
+						sec:authorize="!isAuthenticated()"
+						onclick="window.location.href='/login'">
+						<!-- Heroicons - Login Solid -->
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+							viewBox="0 0 20 20" fill="currentColor">
+							<path fill-rule="evenodd"
+								d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z"
+								clip-rule="evenodd" />
+						</svg>
+						<span>Login</span>
+					</button>
+
+
+					<div class="flex justify-center" sec:authorize="isAuthenticated()">
+							<div class="dropdown relative">
+
+								<button id="dropdownDefaultButton"
+									data-dropdown-toggle="dropdown"
+									class="px-4 py-2 bg-slate-600 hover:bg-slate-700 text-gray-50 rounded-xl flex items-center gap-2"
+									type="button">
+									<span sec:authentication="name"></span>
+									<svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none"
+										stroke="currentColor" viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg">
+										<path stroke-linecap="round" stroke-linejoin="round"
+											stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+								</button>
+
+								<div id="dropdown"
+									class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+									<ul class="py-2 text-sm bg-white dark:text-gray-200"
+										aria-labelledby="dropdownDefaultButton">
+										<li>
+											<button
+												class="dropdown-item text-sm py-2 px-4 font-normal block	w-full	whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
+												type="button" sec:authorize="hasRole('ROLE_ADMIN')"
+												onclick="window.location.href='/admin'">MenuAdmin</button>
+										</li>
+										<li>
+											<form id="logoutForm" th:action="@{/logout}" method="post">
+												<button
+													class="dropdown-item text-sm	py-2 px-4 font-normal block	w-full	whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
+													onclick="document.getElementById('LogoutForm').submit()"
+													type="submit">Sign out</button>
+												<input type="hidden" th:name="${_csrf.parameterName}"
+													th:value=${_csrf.token} />
+											</form>
+										</li>
+									</ul>
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<!-- Footer -->
+
+	<footer th:fragment="footer">
+		<div class="text-gray-700 text-center p-4"
+			style="background-color: rgba(0, 0, 0, 0.2);">
+			&#169; 2023 Copyright: <a class="text-gray-800" href="/home">Delifast</a>
+		</div>
+	</footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Mis Pedidos</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap" rel="stylesheet">
+
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ["Inter", "sans-serif"],
+        },
+      },
+    },
+  };
+</script>
+
+<body>
+  <div class="flex flex-col h-screen">
+    <!-- TOP -->
+    <header th:replace="plantilla/template :: header" class="p-0"></header>
+
+    <!-- MID -->
+    <main class="p-4 flex-grow w-full bg-white dark:bg-gray-100 ">
+      <div class="justify-center mt-0">
+        <section class="bg-white dark:bg-gray-100 rounded">
+          <div class="container px-0 py-5 mx-auto">
+            <h1 class="text-center mt-4 dark:text-gray-800 text-5xl pb-8"
+              style="font-family: 'Phudu', cursive;">Mis Pedidos</h1>
+
+              <div class="border p-4 rounded shadow-sm w-full">
+                <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+                    <div class="w-full overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr
+                                    class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                                    <th class="px-4 py-3">Id</th>
+                                    <th class="px-4 py-3">DIRECCIÓN</th>
+                                    <th class="px-4 py-3">ESTADO</th>
+                                    <th class="px-4 py-3">TELEFONO</th>
+                                    <th class="px-4 py-3">Monto Pagado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                <tr th:each="pedido: ${delivery}" class="text-gray-700">
+                                    <td class="px-4 py-3 text-sm border" th:text="${pedido.id}"></td>
+                                    <td class="px-4 py-3 text-sm border"
+                                        th:text="${pedido.direccion}"></td>
+                                    <td class="px-4 py-3 text-sm border"
+                                        th:text="${pedido.estado}"></td>		
+                                    <td class="px-4 py-3 text-sm border"
+                                        th:text="${pedido.idVenta.idUsuario.telefono}"></td>	
+                                    <td class="px-4 py-3 text-sm border"
+                                        th:text="${pedido.idVenta.montoventa}"></td>			
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- BOTTOM -->
+    <footer th:replace="plantilla/template :: footer" class="bg-gray-200 text-center lg:text-left"></footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+</body>
+
+</html>
