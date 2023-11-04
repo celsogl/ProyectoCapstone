@@ -235,11 +235,11 @@ public String addCart(@RequestParam Long id, Model model) {
     private PdfService pdfService;
 
 
-
+/* 
     @GetMapping("/{idPedido}/descargarFactura")
     public ResponseEntity<ByteArrayResource> descargarFactura(@PathVariable Long idPedido) {
 
-        List<ventaDetalle> pedido = ventaDetalleService.findById(idPedido);
+        ventaDetalle pedido = ventaDetalleService.findById(idPedido);
 
         if (pedido == null) {
             return ResponseEntity.notFound().build();
@@ -253,7 +253,7 @@ public String addCart(@RequestParam Long id, Model model) {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=factura_" + idPedido + ".pdf")
                 .body(byteArrayResource);
     }
-
+*/
 
 
 

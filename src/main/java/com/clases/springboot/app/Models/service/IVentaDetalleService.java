@@ -12,7 +12,7 @@ public interface IVentaDetalleService {
 
     public List<ventaDetalle> findAll();
 
-	public List<ventaDetalle> findById(Long id); 
+	public ventaDetalle findById(Long id); 
 
 
 }
