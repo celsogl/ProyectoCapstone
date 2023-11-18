@@ -1,63 +1,81 @@
 package com.clases.springboot.app.Models.Entity;
 
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "venta")
 public class Venta {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "fechaventa")
-    private Date fecha;
-    @Column(name = "montoventa")
-    private Double montoventa;
-    @ManyToOne()
-    @JoinColumn(name = "ID_USUARIO")
+    
+    private Date fechaVenta;
+
+
+    @OneToMany(mappedBy = "venta")
+    private Collection<Pedido> idPedido;
+
+    @OneToMany(mappedBy = "idVenta")
+    private List<Pagos> pagos;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario idUsuario;
-    @ManyToOne()
-    @JoinColumn(name = "id_mesa")
-    private Mesas mesa;
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
-    public Double getMontoventa() {
-        return montoventa;
+
+    public Date getFechaVenta() {
+        return fechaVenta;
     }
-    public void setMontoventa(Double montoventa) {
-        this.montoventa = montoventa;
+
+    public void setFechaVenta(Date fechaVenta) {
+        this.fechaVenta = fechaVenta;
     }
+
+    public Collection<Pedido> getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(Collection<Pedido> idPedido) {
+        this.idPedido = idPedido;
+    }
+
+    public List<Pagos> getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(List<Pagos> pagos) {
+        this.pagos = pagos;
+    }
+
     public Usuario getIdUsuario() {
         return idUsuario;
     }
+
     public void setIdUsuario(Usuario idUsuario) {
         this.idUsuario = idUsuario;
     }
-    public Date getFecha() {
-        return fecha;
-    }
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-    public Mesas getMesa() {
-        return mesa;
-    }
-    public void setMesa(Mesas mesa) {
-        this.mesa = mesa;
-    }
 
+
+
+   
 }

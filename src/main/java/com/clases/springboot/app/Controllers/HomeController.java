@@ -9,7 +9,7 @@ import com.clases.springboot.app.Models.service.IUsuarioService;
 
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	private IUsuarioService servicio;
 	@GetMapping({"/home","/"})

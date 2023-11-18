@@ -21,25 +21,26 @@
 		}
 	</script>
 </head>
+
 <body class="bg-gray-100">
 
-    <div class="bg-white flex p-6 shadow-sm">
+	<div class="bg-white flex p-6 shadow-sm">
 
-        <h6 class="flex-grow text-2xl font-bold">Registro de Delivery</h6>
-    </div>
+		<h6 class="flex-grow text-2xl font-bold">Registro de Delivery</h6>
+	</div>
 
-    <div class="flex">
+	<div class="flex">
 
 		<div class="p-6 border-r w-64 hidden md:block border-gray-200">
 			<h6 class="font-bold mb-4 ">Acciones rápidas</h6>
-				<li class="flex mb-6"><a
-						class="flex overflow-hidden text-gray-900 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-300 transition duration-300 ease-in-out"
-						href="/home"> <svg xmlns="http://www.w3.org/2000/svg" class="h-6 mr-1 w-6" fill="none"
-							viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-							<path stroke-linecap="round" stroke-linejoin="round"
-								d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-						</svg>
-						<span class="self-center">Inicio</span></a></li>
+			<li class="flex mb-6"><a
+					class="flex overflow-hidden text-gray-900 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-300 transition duration-300 ease-in-out"
+					href="/home"> <svg xmlns="http://www.w3.org/2000/svg" class="h-6 mr-1 w-6" fill="none"
+						viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path stroke-linecap="round" stroke-linejoin="round"
+							d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+					</svg>
+					<span class="self-center">Inicio</span></a></li>
 			<ul sec:authorize="hasRole('ROLE_ADMIN')">
 				<li class="flex mb-6"><a
 						class="flex overflow-hidden text-gray-900 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-300 transition duration-300 ease-in-out"
@@ -62,17 +63,17 @@
 						</svg>
 
 						<span class="self-center">Productos</span></a></li>
-						
-						<li class="flex mb-6"><a
-							class="flex overflow-hidden text-gray-900 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-300 transition duration-300 ease-in-out"
-							href="/listmesas"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-								stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-								<path stroke-linecap="round" stroke-linejoin="round"
-									d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-							</svg>
-							<span class="self-center">Mesas</span></a></li>
+
+				<li class="flex mb-6"><a
+						class="flex overflow-hidden text-gray-900 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-300 transition duration-300 ease-in-out"
+						href="/listmesas"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+							stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+							<path stroke-linecap="round" stroke-linejoin="round"
+								d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+						</svg>
+						<span class="self-center">Mesas</span></a></li>
 			</ul>
-			
+
 
 			<h6 class="font-bold mr-3 mb-4 flex">
 				<svg sec:authorize="hasRole('ROLE_ADMIN')" xmlns="http://www.w3.org/2000/svg" class=" sh mr-1 h-6 w-5"
@@ -136,13 +137,16 @@
 							<span class="self-center"> Realizar Pedido</span></a>
 					</li>
 					<li class="flex mb-6"><a
-						class="flex overflow-hidden text-gray-900 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-300 transition duration-300 ease-in-out"
-						href="/ordenadelivery"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-							<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-						  </svg>						  
-						<span class="self-center">Realizar Pedido Delivery</span></a>
-				</li>
+							class="flex overflow-hidden text-gray-900 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-300 transition duration-300 ease-in-out"
+							href="/ordenadelivery"> <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+								viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+								<path stroke-linecap="round" stroke-linejoin="round"
+									d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+								<path stroke-linecap="round" stroke-linejoin="round"
+									d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+							</svg>
+							<span class="self-center">Realizar Pedido Delivery</span></a>
+					</li>
 
 					<li class="flex mb-6"><a
 							class="flex overflow-hidden text-gray-900 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-300 transition duration-300 ease-in-out"
@@ -161,48 +165,119 @@
 		<div class="p-0 w-full">
 			<main class="p-0 flex-grow">
 
-				<div	class="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+				<div class="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
 					<div class="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
 						<div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
 							<form th:action="@{/saveOrder}" method="post">
 								<div class="px-5 py-7">
-									<label class="font-semibold text-sm text-gray-600 pb-1 block">Dirección</label> <input name="direccion" type="text" required autofocus="autofocus"
+									<label class="font-semibold text-sm text-gray-600 pb-1 block">Comprobante de
+										Pago</label>
+									<select id="comprobante_pago" name="comprobante_pago"
+										class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full">
+										<option selected>Seleccione el comprobante de pago</option>
+										<option value="Boleta">Boleta</option>
+										<option value="Factura">Factura</option>
+									</select>
+
+									<label class="font-semibold text-sm text-gray-600 pb-1 block">RUC</label>
+									<input id="ruc" name="ruc" type="int" maxlength="11" required
+										autofocus="autofocus" disabled
 										class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
+
+									<label class="font-semibold text-sm text-gray-600 pb-1 block">Razón Social</label>
+									<input id="razonSocial" name="razonSocial" type="text" maxlength="255" required
+										autofocus="autofocus" disabled
+										class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
+
+									<label class="font-semibold text-sm text-gray-600 pb-1 block">DNI</label>
+									<input id="dni" name="dni" type="int" maxlength="8" required
+										autofocus="autofocus" disabled
+										class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
+
+									<label class="font-semibold text-sm text-gray-600 pb-1 block">Nombre del Cliente</label>
+									<input id="nombreCliente" name="nombreCliente" type="text" maxlength="255" required
+										autofocus="autofocus" disabled
+										class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
+
 									
-										<label class="font-semibold text-sm text-gray-600 pb-1 block">Telefono de Contacto</label> <input name="telefono" type="tel" pattern="[1-9]{9}" maxlength="9" required autofocus="autofocus"
-										class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />	
-			
-									<label class="font-semibold text-sm text-gray-600 pb-1 block">Método de Pago</label> 
-										<select id="metodo_pago" name="metodo_pago" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full">
-										  <option selected>Seleccione el método de pago</option>
-										  <option value="Visa">Visa</option>
-										  <option value="MasterCard">MasterCard</option>
-										  <option value="American Express">American Express</option>
-										  <option value="Efectivo">Efectivo</option>
-										  <option value="Yape">Yape</option>
-										  <option value="Plin">Plin</option>
-										</select>              
-										<a th:href="@{/saveOrder}">
-									<button 
-										class="btn btn-primary transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
-										<span class="inline-block mr-2"> Registrar Pedido</span>
-										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-											stroke="currentColor" class="w-4 h-4 inline-block">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-												d="M17 8l4 4m0 0l-4 4m4-4H3" />
-										</svg>
-									</button></a> 
+									<label class="font-semibold text-sm text-gray-600 pb-1 block">Dirección</label>
+									<input name="direccion" type="text" required autofocus="autofocus"
+										class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
+
+									<label class="font-semibold text-sm text-gray-600 pb-1 block">Telefono de
+										Contacto</label> <input name="telefono" type="tel"
+										maxlength="9" required autofocus="autofocus"
+										class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
+
+									<label class="font-semibold text-sm text-gray-600 pb-1 block">Método de Pago</label>
+									<select id="metodo_pago" name="metodo_pago"
+										class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full">
+										<option selected>Seleccione el método de pago</option>
+										<option value="Visa">Visa</option>
+										<option value="MasterCard">MasterCard</option>
+										<option value="American Express">American Express</option>
+										<option value="Efectivo">Efectivo</option>
+										<option value="Yape">Yape</option>
+										<option value="Plin">Plin</option>
+									</select>
+									<a th:href="@{/saveOrder}">
+										<button
+											class="btn btn-primary transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
+											<span class="inline-block mr-2"> Registrar Pedido</span>
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+												stroke="currentColor" class="w-4 h-4 inline-block">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+													d="M17 8l4 4m0 0l-4 4m4-4H3" />
+											</svg>
+										</button></a>
 								</div>
 							</form>
 						</div>
 					</div>
 				</div>
-				
+
 
 			</main>
-			
+
 		</div>
-            
-  <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
-</body>
+		
+		<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				var comprobantePagoSelect = document.getElementById('comprobante_pago');
+				
+				// Inicialmente, todos los campos están deshabilitados
+				document.getElementById('dni').disabled = true;
+				document.getElementById('nombreCliente').disabled = true;
+				document.getElementById('ruc').disabled = true;
+				document.getElementById('razonSocial').disabled = true;
+	
+				comprobantePagoSelect.addEventListener('change', function () {
+					var selectedValue = this.value;
+	
+					// Activa/desactiva los campos según la selección
+					if (selectedValue === 'Boleta') {
+						document.getElementById('dni').disabled = false;
+						document.getElementById('nombreCliente').disabled = false;
+						document.getElementById('ruc').disabled = true;
+						document.getElementById('razonSocial').disabled = true;
+					} else if (selectedValue === 'Factura') {
+						document.getElementById('dni').disabled = true;
+						document.getElementById('nombreCliente').disabled = true;
+						document.getElementById('ruc').disabled = false;
+						document.getElementById('razonSocial').disabled = false;
+					} else {
+						// Si no se ha seleccionado nada, todos los campos están deshabilitados
+						document.getElementById('dni').disabled = true;
+						document.getElementById('nombreCliente').disabled = true;
+						document.getElementById('ruc').disabled = true;
+						document.getElementById('razonSocial').disabled = true;
+					}
+				});
+			});
+		</script>
+
+	</body>
+
+
 </html>

@@ -28,12 +28,6 @@ public class ProductosServiceImpl implements IProductosService {
 		return productosDao.save(productos);
 	}
 
-	@Transactional(readOnly = true)
-	@Override
-	public Productos findById(Long id) {
-
-		return productosDao.findById(id).orElse(null);
-	}
 
 	@Override
 	public void deleteById(Long id) {
@@ -41,8 +35,19 @@ public class ProductosServiceImpl implements IProductosService {
 
 	}
 
-	 @Transactional(readOnly = true)
-    @Override
+
+	@Override
+	public Productos findbyId(Long id) {
+		return productosDao.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<Productos> findById(Long id) {
+		return productosDao.findById(id);
+	}
+
+	@Override
 	public Optional<Productos> get(Long id) {
 		return productosDao.findById(id);
 	}

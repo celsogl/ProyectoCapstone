@@ -1,12 +1,14 @@
 package com.clases.springboot.app.Models.Entity;
 
 
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +27,10 @@ public class Productos {
 	private String descripcion;
 	@Column(name = "ESTADO")
 	private int estado;
+
+	@OneToMany(mappedBy = "producto")
+    private Set<PedidoProducto> pedidoProductos; // Los pedidos que incluyen este producto
+
 	public Long getId() {
 		return id;
 	}
@@ -61,5 +67,11 @@ public class Productos {
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
-	
+	public Set<PedidoProducto> getPedidoProductos() {
+		return pedidoProductos;
+	}
+	public void setPedidoProductos(Set<PedidoProducto> pedidoProductos) {
+		this.pedidoProductos = pedidoProductos;
+	}
+  
 }

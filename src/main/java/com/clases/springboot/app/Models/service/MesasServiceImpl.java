@@ -1,6 +1,7 @@
 package com.clases.springboot.app.Models.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class MesasServiceImpl implements IMesasService {
     @Override
 	@Transactional(readOnly = true)
     public List<Mesas> findAll() {
-      return (List<Mesas>) mesaDao.findAll();
+      return (List<Mesas>)mesaDao.findAll();
     }
 
     @Override
@@ -34,6 +35,11 @@ public class MesasServiceImpl implements IMesasService {
 	@Transactional
     public Mesas save(Mesas mesas) {
        return mesaDao.save(mesas);
+    }
+
+    @Override
+    public Optional<Mesas> get(Long id) {
+        return mesaDao.findById(id);
     }
     
 }

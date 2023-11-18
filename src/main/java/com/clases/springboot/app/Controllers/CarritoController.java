@@ -1,10 +1,7 @@
 package com.clases.springboot.app.Controllers;
 
-
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,26 +19,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.clases.springboot.app.Models.Entity.Carrito;
 import com.clases.springboot.app.Models.Entity.Delivery;
+import com.clases.springboot.app.Models.Entity.DetalleCarrito;
 import com.clases.springboot.app.Models.Entity.Pagos;
 import com.clases.springboot.app.Models.Entity.Pedido;
+import com.clases.springboot.app.Models.Entity.PedidoProducto;
 import com.clases.springboot.app.Models.Entity.Productos;
 import com.clases.springboot.app.Models.Entity.Usuario;
 import com.clases.springboot.app.Models.Entity.Venta;
-import com.clases.springboot.app.Models.Entity.ventaDetalle;
 import com.clases.springboot.app.Models.service.IDeliveryService;
 import com.clases.springboot.app.Models.service.IPagosService;
+import com.clases.springboot.app.Models.service.IPedidoProductoService;
+import com.clases.springboot.app.Models.service.IPedidoService;
 import com.clases.springboot.app.Models.service.IProductosService;
 import com.clases.springboot.app.Models.service.IUsuarioService;
-import com.clases.springboot.app.Models.service.IVentaDetalleService;
+
 import com.clases.springboot.app.Models.service.IVentasService;
 import com.clases.springboot.app.Models.service.PdfService;
+import com.itextpdf.text.DocumentException;
 
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/")
 public class CarritoController {
-    
+
     @Autowired
     private IProductosService productosService;
 
@@ -52,127 +55,127 @@ public class CarritoController {
     private IVentasService ventasService;
 
     @Autowired
-    private IVentaDetalleService ventaDetalleService;
-
-    @Autowired
     private IDeliveryService deliveryService;
 
     @Autowired
     private IPagosService pagosService;
 
+    @Autowired
+    private IPedidoService pedidoService;
 
-    
+    @Autowired
+    private IPedidoProductoService pedidoProductoService;
 
-    //Almacenar los detalles de la Venta
-    List<ventaDetalle> detalles = new ArrayList<ventaDetalle>();
-    
-    //Datos de la Venta
+    Usuario usuario = new Usuario();
+
+    // Datos de la Venta
     Venta venta = new Venta();
 
-    //Datos de Pago
+    // Datos de Pago
     Pagos pagos = new Pagos();
 
-    //Datos de Delivery
-     Delivery delivery = new Delivery();
+    // Datos de Delivery
+    Delivery delivery = new Delivery();
 
-   
+    // Datos de Pedido
+    Pedido pedido = new Pedido();
 
-     @PostMapping("/carrito")
-public String addCart(@RequestParam Long id, Model model) {
-    Optional<Productos> productoOptional = productosService.get(id);
+    @PostMapping("/carrito")
+    public String addCart(@RequestParam Long id, Model model, HttpSession session) {
 
-    if (!productoOptional.isPresent()) {
-        // Manejo del error o retorno.
-        return "errorPage"; // o redirige a una página de error, según lo que desees.
-    }
+        Optional<Productos> productoOpt = productosService.get(id);
 
-    Productos productos = productoOptional.get();
+        if (productoOpt.isPresent()) {
+            Productos producto = productoOpt.get();
+            DetalleCarrito item = new DetalleCarrito();
+            item.setProductoId(producto.getId());
+            item.setNombre(producto.getNombre());
+            item.setCantidad(1);
+            item.setPrecio(producto.getPrecio());
 
-    // Comprobar si el producto ya está en el carrito
-    Optional<ventaDetalle> productoExistenteOpt = detalles.stream()
-            .filter(p -> p.getIdProductos().getId().equals(productos.getId()))
-            .findFirst();
-
-    if (productoExistenteOpt.isPresent()) {
-        // Si el producto ya está en el carrito, incrementa su cantidad y actualiza el precio total
-        ventaDetalle productoExistente = productoExistenteOpt.get();
-        productoExistente.setCantidad(productoExistente.getCantidad() + 1);
-        productoExistente.setTotalapagar(productoExistente.getPrecioproducto() * productoExistente.getCantidad());
-    } else {
-        // Si el producto no está en el carrito, lo añade
-        ventaDetalle nuevoDetalle = new ventaDetalle();
-        nuevoDetalle.setCantidad(1);
-        nuevoDetalle.setPrecioproducto(productos.getPrecio());
-        nuevoDetalle.setIdProductos(productos);
-        nuevoDetalle.setTotalapagar(productos.getPrecio()); // Ya que la cantidad es 1, el total es el precio del producto
-
-        detalles.add(nuevoDetalle);
-    }
-
-    // Actualizar el total de la venta
-    double sumTotal = detalles.stream().mapToDouble(dt -> dt.getTotalapagar()).sum();
-    venta.setMontoventa(sumTotal);
-
-    // Añadir al modelo para la vista
-    model.addAttribute("carrito", detalles);
-    model.addAttribute("venta", venta);
-
-    return "/ProcesarVenta/procesarventa";
-}
-
-    //Quitar producto del carrito
-    @GetMapping("/eliminar/carrito/{id}")
-    public String deleteProductCarrito(@PathVariable Long id, Model model){
-        List<ventaDetalle> ordenesNuevas = new ArrayList<ventaDetalle>();
-
-        for(ventaDetalle ventaDetalle: detalles ){
-            if(ventaDetalle.getIdProductos().getId()!=id){
-                ordenesNuevas.add(ventaDetalle);
+            Carrito carrito = (Carrito) session.getAttribute("carrito");
+            if (carrito == null) {
+                carrito = new Carrito();
             }
+
+            double totalCarrito = carrito.getItems().stream()
+                    .mapToDouble(i -> i.getPrecio() * i.getCantidad())
+                    .sum();
+
+            item.setMotoapagar(totalCarrito);
+
+            // Pasar el total al modelo
+            model.addAttribute("totalCarrito", totalCarrito);
+
+            carrito.addItem(item);
+            session.setAttribute("carrito", carrito);
+
+        } else {
+            return "redirect:/ordenadelivery";
         }
-        //ponemos la nueva lista con los productos restantes
-        detalles = ordenesNuevas;
 
-        double sumaTotal=0;
-        sumaTotal = detalles.stream().mapToDouble(dt->dt.getPrecioproducto()).sum();
-        
-        venta.setMontoventa(sumaTotal);
-
-        model.addAttribute("carrito", detalles);
-        model.addAttribute("venta", venta);
-
-        
-        return "/ProcesarVenta/procesarventa";
+        return "redirect:/mostrarCarrito";
     }
 
-     @GetMapping("/mostrarCarrito")
-    public String getCarrito(Model model){
-        model.addAttribute("carrito", detalles);
-        model.addAttribute("venta", venta);
+    @GetMapping("/mostrarCarrito")
+    public String verCarrito(Model model, HttpSession session) {
 
-        return "/ProcesarVenta/procesarventa";
+        Carrito carrito = (Carrito) session.getAttribute("carrito");
+
+        // Si no hay carrito en la sesión, crea uno nuevo (esto puede variar según tu
+        // lógica de negocio)
+        if (carrito == null) {
+            carrito = new Carrito();
+            session.setAttribute("carrito", carrito);
+        }
+
+        // Calcula el total del carrito
+        double totalCarrito = carrito.getItems().stream()
+                .mapToDouble(item -> item.getPrecio() * item.getCantidad())
+                .sum();
+
+        // Añade el carrito y el total al modelo
+        model.addAttribute("carrito", carrito);
+        model.addAttribute("totalCarrito", totalCarrito);
+        return "/ProcesarVenta/procesarventa"; // Nombre de tu vista del carrito
     }
 
-    
+    @GetMapping("/eliminar/carrito/{id}")
+    public String eliminarDelCarrito(@PathVariable Long id, HttpSession session) {
+        Carrito carrito = (Carrito) session.getAttribute("carrito");
+
+        if (carrito != null) {
+            carrito.removeItem(id);
+        }
+
+        return "redirect:/mostrarCarrito";
+    }
+
     @GetMapping("/resumenPago")
-    public String order (Model model){
-     
-      // Usuario usuario =usuarioService.findById(1).get();
-         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    
-    // Verifica que el usuario esté autenticado antes de obtener su información.
-    if (authentication.isAuthenticated()) {
-        String username = authentication.getName(); // Obtiene el nombre de usuario
-        // Ahora, puedes usar el nombre de usuario para buscar el ID del usuario en tu base de datos.
-        // Supongamos que tienes un servicio llamado usuarioService que busca el ID por nombre de usuario.
-        Usuario usuario = usuarioService.findByUsername(username);
-        
-        // Agrega el usuario al modelo
-        model.addAttribute("usuario", usuario);
-    }
+    public String order(Model model, HttpSession session) {
 
+        Carrito carrito = (Carrito) session.getAttribute("carrito");
 
-        model.addAttribute("carrito", detalles);
+        // Usuario usuario =usuarioService.findById(1).get();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Verifica que el usuario esté autenticado antes de obtener su información.
+        if (authentication.isAuthenticated()) {
+            String username = authentication.getName(); // Obtiene el nombre de usuario
+
+            Usuario usuario = usuarioService.findByUsername(username);
+
+            // Agrega el usuario al modelo
+            model.addAttribute("usuario", usuario);
+
+        }
+
+        double totalCarrito = carrito.getItems().stream()
+                .mapToDouble(item -> item.getPrecio() * item.getCantidad())
+                .sum();
+
+        model.addAttribute("totalCarrito", totalCarrito);
+        session.setAttribute("carrito", carrito);
         model.addAttribute("venta", venta);
 
         return "VentaResumen";
@@ -181,82 +184,110 @@ public String addCart(@RequestParam Long id, Model model) {
     // guardar la orden
 
     @PostMapping(value = "/saveOrder")
-	public String saveOrder( @RequestParam("direccion") String direccion,
-    @RequestParam("metodo_pago") String metodo_pago,
-    @RequestParam("telefono") String telefono) {
-		
-        Date fechaCreacion = new Date();
-		venta.setFecha(fechaCreacion);
-		
-         // Usuario usuario =usuarioService.findById(1).get();
-         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    
-    // Verifica que el usuario esté autenticado antes de obtener su información.
-    if (authentication.isAuthenticated()) {
-        String username = authentication.getName(); // Obtiene el nombre de usuario
+    public String saveOrder(@RequestParam(value = "dni", required = false) Long dni,
+            @RequestParam(value = "ruc", required = false) Long ruc,
+            @RequestParam("direccion") String direccion,
+            @RequestParam("metodo_pago") String metodo_pago,
+            @RequestParam("telefono") String telefono,
+            @RequestParam(value = "razonSocial", required = false, defaultValue = "") String razonSocial,
+            @RequestParam(value = "nombreCliente", required = false, defaultValue = "") String nombreCliente,
+            HttpSession session) {
 
-        Usuario usuario = usuarioService.findByUsername(username);
+        Carrito carrito = (Carrito) session.getAttribute("carrito");
 
+        Usuario usuario = usuarioService.findById(1).get();
+
+        double totalCarrito = carrito.getItems().stream()
+                .mapToDouble(item -> item.getPrecio() * item.getCantidad())
+                .sum();
+
+        // Configurar los detalles de la venta...
+        venta.setFechaVenta(new Date());
         venta.setIdUsuario(usuario);
-    }
+        ventasService.save(venta);
 
-		
-		ventasService.save(venta);
-		
-		//guardar detalles
-		for (ventaDetalle dt:detalles) {
-			dt.setIdVenta(venta);
-			ventaDetalleService.save(dt);
-		}
+        // Configurar los detalles del pedido...
 
-        //Pagos
-        pagos.setIdVenta(venta);
+
+            pedido.setFechaPedido(new Date());
+            pedido.setTipoPedido("Delivery");
+            pedido.setVenta(venta); // Asociar la venta con el pedido
+            pedidoService.save(pedido);       
+
+
+       
+        for (DetalleCarrito item : carrito.getItems()) {
+            PedidoProducto pedidoProducto = new PedidoProducto();
+            pedidoProducto.setPedidos(pedido);
+            pedidoProducto.setProducto(productosService.findById(item.getProductoId()).orElse(null));
+            pedidoProducto.setCantidad(item.getCantidad());
+            pedidoProductoService.save(pedidoProducto);
+        }  
+
+        // Crear y guardar el Pago
+
+        // Configurar los detalles de pago...
+
+        // Pagos
+        if (dni != null && !dni.toString().isEmpty()) {
+            pagos.setDni(dni);
+            pagos.setNombreCliente(nombreCliente);
+        } else {
+            pagos.setDni(null);
+        }
+        if (ruc != null && !ruc.toString().isEmpty()) {
+            pagos.setRuc(ruc);
+            pagos.setRazonSocial(razonSocial);
+        } else {
+            pagos.setRuc(null);
+        }
         pagos.setMetodo_pago(metodo_pago);
+        pagos.setFecha(new Date());
+        pagos.setIdVenta(venta);
+        pagos.setMonto(totalCarrito);
         pagosService.save(pagos);
 
-        //DELIVERY
-        delivery.setDireccion(direccion);
-        delivery.setTelefono(telefono);
+        // Crear y guardar la información de Delivery si es necesaria
+
+        // Configurar los detalles de entrega...
+
+        delivery.setPedido(pedido);
         delivery.setEstado("En Preparación");
-        delivery.setIdVenta(venta);
+        delivery.setTelefono(telefono);
+        delivery.setDireccion(direccion);
         deliveryService.save(delivery);
-		
-		///limpiar lista y orden
-		venta = new Venta();
+
+        // Limpiar el carrito
+        session.removeAttribute("carrito");
+        venta = new Venta();
         pagos = new Pagos();
         delivery = new Delivery();
-		detalles.clear();
-		
-		return "redirect:/";
-	}    
+        pedido = new Pedido();
+        
+       return "redirect:/";
+    }
 
-
-     @Autowired
+    @Autowired
     private PdfService pdfService;
 
-
-/* 
     @GetMapping("/{idPedido}/descargarFactura")
-    public ResponseEntity<ByteArrayResource> descargarFactura(@PathVariable Long idPedido) {
+    public ResponseEntity<ByteArrayResource> descargarFactura(@PathVariable Long idPedido) throws DocumentException {
 
-        ventaDetalle pedido = ventaDetalleService.findById(idPedido);
+        Venta pedido = ventasService.findById(idPedido);
+
+        Pagos pagos = pagosService.findById(idPedido);
 
         if (pedido == null) {
             return ResponseEntity.notFound().build();
         }
 
-        ByteArrayInputStream byteArrayInputStream = pdfService.generateInvoice(pedido);
+        ByteArrayInputStream byteArrayInputStream = pdfService.generateInvoice(pedido, pagos);
         ByteArrayResource byteArrayResource = new ByteArrayResource(byteArrayInputStream.readAllBytes());
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=factura_" + idPedido + ".pdf")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename= factura_" + idPedido + ".pdf")
                 .body(byteArrayResource);
     }
-*/
-
-
-
-
 
 }

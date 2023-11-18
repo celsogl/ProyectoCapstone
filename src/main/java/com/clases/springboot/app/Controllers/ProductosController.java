@@ -75,7 +75,7 @@ public class ProductosController{
 	public String editarProducto(@PathVariable(value = "id") Long id, Map<String, Object> model,@RequestParam(name = "file", required = false) MultipartFile file) throws IOException {
 		Productos productos = null;
 		if (id > 0) {
-			productos = productosService.findById(id);
+			productos = productosService.findbyId(id);
 		}
 		else {
 			return "redirect:/listaproductos";

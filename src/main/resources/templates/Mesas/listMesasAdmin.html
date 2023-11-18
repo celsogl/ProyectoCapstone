@@ -183,10 +183,10 @@
 										<tr th:each="mesa: ${mesas}" class="text-gray-700">
 											<td class="px-4 py-3 text-sm border" th:text="${mesa.id}"></td>
 											<td class="px-4 py-3 text-sm border" th:text="${mesa.numero}"></td>
-											<div th:if="${mesa.estado == true}">
+											<div th:if="${mesa.estado == 1}">
 												<td class="px-4 py-3 text-sm border">ACTIVO</td>
 											</div>
-											<div th:if="${mesa.estado == false}">
+											<div th:if="${mesa.estado == 0}">
 												<td class="px-4 py-3 text-sm border">INACTIVO</td>
 											</div>
 											<td class="px-4 py-3 text-sm border"><a

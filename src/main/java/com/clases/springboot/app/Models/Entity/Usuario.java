@@ -1,6 +1,7 @@
 package com.clases.springboot.app.Models.Entity;
 
 import java.util.Collection;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.persistence.JoinColumn;
@@ -51,7 +53,9 @@ public class Usuario {
 				)
 	    private Collection<Rol> roles;
 	
-	
+	@OneToMany(mappedBy = "idUsuario")
+    private List<Venta> ventas;
+
 
 
 	public Usuario(Integer id, String nombre, String user, String password, Collection<Rol> roles,String telefono,int estado) {

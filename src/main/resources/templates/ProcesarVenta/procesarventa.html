@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Listar Ventas</title>
+    <title>Detalle de Compras</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
@@ -26,7 +26,7 @@
 
     <div class="bg-white flex p-6 shadow-sm">
 
-        <h6 class="flex-grow text-2xl font-bold">Menú del día</h6>
+        <h6 class="flex-grow text-2xl font-bold">Detalle de Compras</h6>
     </div>
 
     <div class="flex">
@@ -178,19 +178,19 @@
                     </tr>
                   </thead>
                   <tbody class="bg-white">
-                    <tr th:each="carrito: ${carrito}">
+                    <tr th:each="item : ${carrito.items}">
                       <td class="px-4 py-3 text-sm border"
-                        th:text="${carrito.idProductos.nombre}"></td>
+                        th:text="${item.nombre}"></td>
                       <td class="px-4 py-3 text-sm border"
-                        th:text="${carrito.precioproducto}"></td>
+                        th:text="${item.precio}"></td>
                       <td class="px-4 py-3 text-sm border"
-                        th:text="${carrito.cantidad}"></td>
+                        th:text="${item.cantidad}"></td>
                       <td class="px-4 py-3 text-sm border"
-                        th:text="${carrito.totalapagar}"></td>
+                        th:text="${item.subtotal}"></td>
                         <td class="px-4 py-3 text-sm border"><a
                           class="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
                           th:text="'Quitar'"
-                          th:href="@{/eliminar/carrito/{id}  (id=${carrito.idProductos.id})}"
+                          th:href="@{/eliminar/carrito/{id}  (id=${item.productoId})}"
                           onclick="return confirm('Deseas Eliminar?');"></a></td>
                     </tr>
                   </tbody>
@@ -198,7 +198,7 @@
                 </table>
                 <h2 class="text-md font-semibold text-right text-gray-900">Total a
                   pagar: </h2>
-                <p class="text-md text-right" th:text="'S/. '+${venta.montoventa}"></p>
+                <p class="text-md text-right" th:text="'S/. '+${totalCarrito}"></p> 
                 <button class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
                  <a th:href="@{/resumenPago}" >Procesar Venta</a> 
                 </button>

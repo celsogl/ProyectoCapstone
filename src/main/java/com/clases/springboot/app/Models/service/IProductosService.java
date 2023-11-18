@@ -10,9 +10,11 @@ public interface IProductosService {
 
 	public Productos save(Productos productos); 
 
-	public Productos findById(Long id); 
+	public Productos findbyId(Long id); 
 
 	public void deleteById(Long id);
 
-    public Optional<Productos> get(Long id);
+    public Optional<Productos> findById(Long id);
+
+	public Optional<Productos> get(Long id);
 }
