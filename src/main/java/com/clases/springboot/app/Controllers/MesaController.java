@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.clases.springboot.app.Models.Entity.Mesas;
 
 import com.clases.springboot.app.Models.service.IMesasService;
-import com.clases.springboot.app.Models.service.IProductosService;
 
 @Controller
 @SessionAttributes("mesas")
@@ -24,13 +23,10 @@ public class MesaController {
     @Autowired
     private IMesasService mesasService;
 
-	@Autowired
-	private IProductosService productosService;
 
     @RequestMapping(value = "/listmesas", method = RequestMethod.GET)
 	public String listarMesas(Model model) {
 		model.addAttribute("mesas", mesasService.findAll());
-		model.addAttribute("productos", productosService.findAll());
 		return "/Mesas/listMesasAdmin";
 	}
 
