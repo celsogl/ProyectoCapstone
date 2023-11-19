@@ -175,7 +175,7 @@
 			<div class="p-6 max-w-2xl mx-auto bg-white rounded-xl shadow-md">
 				<!-- Listado de Mesas -->
 				<div class="grid grid-cols-3 gap-4 mb-4">
-					<div th:each="mesa : ${mesas}"
+					<div th:each="mesa : ${mesas}" th:if="${mesa.estado == 1}"
 						class="mesa p-4 border rounded shadow hover:bg-gray-100 cursor-pointer">
 						<input type="hidden" th:value="${mesa.id}" name="id">
 						<p th:text="${mesa.numero}"></p>

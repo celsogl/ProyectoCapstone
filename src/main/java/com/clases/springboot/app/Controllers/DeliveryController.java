@@ -35,9 +35,21 @@ public class DeliveryController {
 	@RequestMapping(value = "/ordenadelivery", method = RequestMethod.GET)
 	public String listarOrdena(Model model) {
 		model.addAttribute("productos", productosService.findAll());
-		return "/OrdenaDelivery/ordenaDelivery";
+		return "/VentaRapida/ventarapida";
 	}
 
+    @RequestMapping(value = "/createdelivery")
+	public String crearDelivery(Map<String, Object> model) {
+		Delivery delivery = new Delivery();
+		model.put("delivery", delivery);
+		return "/Delivery/registrarDelivery";
+	}
+
+    @RequestMapping(value = "/createdelivery", method = RequestMethod.POST)
+	public String guardarDelivery(Delivery delivery){
+			deliveryService.save(delivery);
+		return "redirect:/listadelivery";
+	}
 
 	 @RequestMapping(value = "/formdelivery/{id}")
     public String editarVentas(@PathVariable(value = "id") Long id, Map<String, Object> model) {
